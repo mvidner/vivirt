@@ -1,0 +1,14 @@
+#!/bin/sh -x
+
+# vivirt --name n -c CPUs -m 1g
+
+# CPUs
+# cpus.count or cpus (single parameter)
+# name= or name.name=
+# memory=N or memory.kb=N or memory.gb=N
+
+cat skeleton.xml \
+  | xsltproc --stringparam name  "${NAME_NAME?}" name.xsl - \
+  | xsltproc --stringparam kb  "${MEMORY_KB}" --stringparam mb  "${MEMORY_MB}" --stringparam gb  "${MEMORY_GB}" memory.xsl - \
+  | xsltproc --stringparam count "${CPUS_COUNT-1}" cpu.xsl - \
+  | tee result.xml
