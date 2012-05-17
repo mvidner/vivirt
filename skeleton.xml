@@ -5,4 +5,7 @@
 	<os>
     		<type>hvm</type>
   	</os>
+	<devices>
+		<graphics/>
+	</devices>
 </domain>
