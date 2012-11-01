@@ -6,11 +6,11 @@
 # cpus.count or cpus (single parameter)
 # name= or name.name=
 # memory=N or memory.kb=N or memory.gb=N
-
-cat skeleton.xml \
-  | xsltproc --stringparam name  "${NAME_NAME?}" name.xsl - \
-  | xsltproc --stringparam kb  "${MEMORY_KB}" --stringparam mb  "${MEMORY_MB}" --stringparam gb  "${MEMORY_GB}" memory.xsl - \
-  | xsltproc --stringparam count "${CPUS_COUNT-1}" cpu.xsl - \
-  | xsltproc graphics.xsl - \
-  | xsltproc console.xsl - \
+D=${0%/*}
+cat "$D"/skeleton.xml \
+  | xsltproc --stringparam name  "${NAME_NAME?}" "$D"/name.xsl - \
+  | xsltproc --stringparam kb  "${MEMORY_KB}" --stringparam mb  "${MEMORY_MB}" --stringparam gb  "${MEMORY_GB}" "$D"/memory.xsl - \
+  | xsltproc --stringparam count "${CPUS_COUNT-1}" "$D"/cpu.xsl - \
+  | xsltproc "$D"/graphics.xsl - \
+  | xsltproc "$D"/console.xsl - \
   | tee result.xml
