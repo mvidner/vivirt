@@ -16,5 +16,8 @@ cat "$D"/skeleton.xml \
   | if [ -n "$CDROM" ]; then
 	xsltproc --stringparam file "$CDROM" "$D"/cdrom.xsl -
     else cat; fi \
+  | if [ -n "$FLOPPY" ]; then
+	xsltproc --stringparam file "$FLOPPY" "$D"/floppy.xsl -
+    else cat; fi \
   | xmllint --format - \
   | tee result.xml
