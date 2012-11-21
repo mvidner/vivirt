@@ -12,6 +12,7 @@
 		<disk type='file' device='cdrom'>
 			<driver name='qemu' type='raw'/>
 			<source file='{$file}'/>
+			<target dev='hdc' bus='ide'/>
 		        <readonly/>
 	       	</disk>
           </xsl:copy>
