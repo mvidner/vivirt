@@ -9,7 +9,10 @@
 D=${0%/*}
 cat "$D"/skeleton.xml \
   | xsltproc --stringparam name  "${NAME_NAME?}" "$D"/name.xsl - \
-  | xsltproc --stringparam kb  "${MEMORY_KB}" --stringparam mb  "${MEMORY_MB}" --stringparam gb  "${MEMORY_GB}" "$D"/memory.xsl - \
+  | xsltproc ${MEMORY_KB+ --stringparam kb  "${MEMORY_KB}"} \
+             ${MEMORY_MB+ --stringparam mb  "${MEMORY_MB}"} \
+             ${MEMORY_GB+ --stringparam gb  "${MEMORY_GB}"} \
+	     "$D"/memory.xsl - \
   | xsltproc --stringparam count "${CPUS_COUNT-1}" "$D"/cpu.xsl - \
   | xsltproc "$D"/graphics.xsl - \
   | xsltproc "$D"/console.xsl - \
