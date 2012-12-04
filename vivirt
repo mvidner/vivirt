@@ -13,6 +13,9 @@ cat "$D"/skeleton.xml \
   | xsltproc --stringparam count "${CPUS_COUNT-1}" "$D"/cpu.xsl - \
   | xsltproc "$D"/graphics.xsl - \
   | xsltproc "$D"/console.xsl - \
+  | if [ -n "$DISK" ]; then
+	xsltproc --stringparam file "$DISK" "$D"/disk.xsl -
+    else cat; fi \
   | if [ -n "$CDROM" ]; then
 	xsltproc --stringparam file "$CDROM" "$D"/cdrom.xsl -
     else cat; fi \
