@@ -1,14 +1,11 @@
 #!/bin/sh -x
 
-# vivirt --name n -c CPUs -m 1g
+# compatibility:
+: ${NAME=$NAME_NAME}
 
-# CPUs
-# cpus.count or cpus (single parameter)
-# name= or name.name=
-# memory=N or memory.kb=N or memory.gb=N
 D=${0%/*}
 cat "$D"/skeleton.xml \
-  | xsltproc --stringparam name  "${NAME_NAME?}" "$D"/name.xsl - \
+  | xsltproc --stringparam name  "${NAME:-vivirt-$(date +%Y%m%d-%H%M%S)}" "$D"/name.xsl - \
   | xsltproc ${MEMORY_KB+ --stringparam kb  "${MEMORY_KB}"} \
              ${MEMORY_MB+ --stringparam mb  "${MEMORY_MB}"} \
              ${MEMORY_GB+ --stringparam gb  "${MEMORY_GB}"} \
@@ -31,5 +28,4 @@ cat "$D"/skeleton.xml \
   | if [ -n "$FLOPPY" ]; then
 	xsltproc --stringparam file "$FLOPPY" "$D"/floppy.xsl -
     else cat; fi \
-  | xmllint --format - \
-  | tee result.xml
+  | xmllint --format -
