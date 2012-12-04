@@ -3,6 +3,7 @@
 	<xsl:output method="xml" indent="yes"/>
 
 	<xsl:param name="file"/>
+	<xsl:param name="unit">0</xsl:param>
 
 	<!-- add  -->
 	<xsl:template match="/domain/devices">
@@ -13,6 +14,7 @@
 			<driver name='qemu' type='qcow2'/> 
 			<source file='{$file}'/> 
 			<target dev='hda' bus='ide'/> 
+			<address type='drive' controller='0' bus='1' target='0' unit='{$unit}'/>
 		</disk> 
           </xsl:copy>
 	</xsl:template>

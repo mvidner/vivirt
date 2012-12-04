@@ -16,8 +16,14 @@ cat "$D"/skeleton.xml \
   | if [ -n "$DISK" ]; then
 	xsltproc --stringparam file "$DISK" "$D"/disk.xsl -
     else cat; fi \
+  | if [ -n "$DISK2" ]; then
+	xsltproc --stringparam file "$DISK2" --stringparam unit 1 "$D"/disk.xsl -
+    else cat; fi \
   | if [ -n "$CDROM" ]; then
 	xsltproc --stringparam file "$CDROM" "$D"/cdrom.xsl -
+    else cat; fi \
+  | if [ -n "$CDROM2" ]; then
+	xsltproc --stringparam file "$CDROM2" --stringparam unit 1 "$D"/cdrom.xsl -
     else cat; fi \
   | if [ -n "$FLOPPY" ]; then
 	xsltproc --stringparam file "$FLOPPY" "$D"/floppy.xsl -
